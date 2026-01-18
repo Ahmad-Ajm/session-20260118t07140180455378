@@ -84,6 +84,8 @@
 | FeatureId      | FeatureName        | FeatureType | Summary                                      | Personas         | Requirements      | SpecFolders                             | Priority | Status      |
 |----------------|--------------------|-------------|----------------------------------------------|------------------|-------------------|------------------------------------------|----------|------------|
 | FEAT-EXAMPLE01 | Example Feature    | CRUD        | مثال لميزة CRUD كاملة (إنشاء/عرض/تعديل/حذف) | Admin, User      | FR-EX-01, FR-EX-02 | 04-domain, 07-api, 08-ui                | P1       | Planned    |
+| FEAT-CV-CREATION | CV Creation | CRUD | إنشاء/تعديل/عرض/إدارة السير الذاتية ومكوناتها (تعليم/خبرات/مهارات/معلومات تواصل) | User |  | specifications/04-domain, specifications/07-api, specifications/08-ui, psec-kit-file/FEAT-CV-CREATION | P0 | In-Progress |
+| FEAT-USER-REGISTRATION | User Registration & Authentication | Security | تسجيل المستخدمين وتسجيل الدخول وإدارة الحساب/الملف الشخصي واستعادة كلمة المرور | User |  | specifications/04-domain, specifications/07-api, specifications/08-ui, psec-kit-file/FEAT-USER-REGISTRATION | P0 | In-Progress |
 
 أضف الصفوف الحقيقية هنا أسفل المثال ↑.
 
@@ -163,3 +165,57 @@
 
 بعد هذا المثال، ابدأ بإضافة سكاشن حقيقية لكل Feature في مشروعك بنفس القالب.
 يمكنك ترتيبها حسب الأولوية أو حسب الدومين (Auth, Users, Search, Reporting, AI, Integration, ...).
+
+### FEAT-CV-CREATION – CV Creation
+**Type:** CRUD  
+**Summary:** تمكين المستخدم من إنشاء وإدارة السيرة الذاتية عبر واجهة Angular وربطها بواجهات ASP.NET Core، مع حفظ البيانات في PostgreSQL.  
+**Personas:** User  
+**Requirements:**  
+**Spec Folders / Files:**  
+- `psec-kit-file/FEAT-CV-CREATION/clarify.md`
+- `psec-kit-file/FEAT-CV-CREATION/plan.md`
+- `psec-kit-file/FEAT-CV-CREATION/specify.md`
+- `psec-kit-file/FEAT-CV-CREATION/tasks.md`
+- `specifications/04-domain/` (CV, Education, Experience, Skill, ContactInfo)
+- `specifications/07-api/` (Endpoints: `/api/app/cv`)
+- `specifications/08-ui/` (Angular: CVModule, list/editor/preview)
+
+**Dependencies / Relations:**  
+- تعتمد على: FEAT-USER-REGISTRATION (المستخدم المسجّل/المصادَق عليه)  
+- تؤثر على: (لاحقًا) ميزات البحث/التصفية والتقارير عند إضافتها
+
+**KPI Template:**  
+- `specifications/12-testing/kpi-crud-template.md`
+
+**Recommended Feature Prompt (Cursor):**  
+- `cursor_prompt_feature-crud.txt`
+
+**Notes / Open Questions:**  
+- متبقي حسب progress: اختيار القوالب، تخصيص التصميم (ألوان/خطوط)، بحث/تصفية متقدمة، الاختبارات، وإعدادات النشر.
+
+### FEAT-USER-REGISTRATION – User Registration & Authentication
+**Type:** Security  
+**Summary:** تسجيل المستخدمين، تسجيل الدخول، وإدارة الحساب/الملف الشخصي واستعادة كلمة المرور عبر Backend .NET 8 + Angular 17.  
+**Personas:** User  
+**Requirements:**  
+**Spec Folders / Files:**  
+- `psec-kit-file/FEAT-USER-REGISTRATION/clarify.md`
+- `psec-kit-file/FEAT-USER-REGISTRATION/plan.md`
+- `psec-kit-file/FEAT-USER-REGISTRATION/specify.md`
+- `psec-kit-file/FEAT-USER-REGISTRATION/tasks.md`
+- `specifications/04-domain/` (User, UserProfile)
+- `specifications/07-api/` (Endpoints: `/api/auth`, `/api/account`)
+- `specifications/08-ui/` (Angular: Register/Login/Profile/ForgotPassword + AuthGuard)
+
+**Dependencies / Relations:**  
+- تعتمد على: لا شيء (ميزة تأسيسية)  
+- تؤثر على: FEAT-CV-CREATION (قيود الوصول وربط البيانات بالمستخدم)
+
+**KPI Template:**  
+- `specifications/12-testing/kpi-security-template.md`
+
+**Recommended Feature Prompt (Cursor):**  
+- `cursor_prompt_feature-security.txt`
+
+**Notes / Open Questions:**  
+- متبقي حسب progress: ربط مسارات auth في AppRoutingModule وشريط التنقل، استكمال قفل الحساب ومحاولات الدخول، توحيد رسائل الأخطاء، الاختبارات، وإعدادات النشر.
